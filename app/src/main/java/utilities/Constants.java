@@ -64,7 +64,7 @@ public class Constants {
     public static final String VIDEO_COMPRESSOR_TEMP_DIR = "/Temp/";
 
     //public static final String BASE_URL = "https://backdev.shopxgo.com";//"http://www.mocky.io";
-    public static final String BASE_URL = "http://178.79.180.111/hackathon-backend/";//"http://www.mocky.io";
+    public static final String BASE_URL = "https://serene-spire-46496.herokuapp.com/";//"http://www.mocky.io";
     public static final String PRIVACY_POLICY_URL = "http://shopxgo.com/shopx-go-privacy-policy.html";
     public static final String SHOPX_FACEBOOK_URL = "https://www.facebook.com/shopxapp";
 

@@ -32,9 +32,9 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.login_et_id)
     EditText etID;
 
-    @BindView(R.id.login_btn_id)
-    Button btn;
 
+    @BindView(R.id.login_btn_login)
+    Button btnLogin;
 
 
     @Override
@@ -80,12 +80,15 @@ public class LoginActivity extends AppCompatActivity {
                 mCodeScanner.startPreview();
             }
         });
-        btn.setOnClickListener(new View.OnClickListener() {
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, LocationsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+                finish();
 
             }
         });

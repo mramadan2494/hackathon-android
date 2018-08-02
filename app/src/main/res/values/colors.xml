@@ -5,4 +5,12 @@
     <color name="colorAccent">#A17334</color>
     <color name="colorGray">#BEBEBE</color>
 
+
+    <color name="hintColor">#637b7e</color>
+    <color name="whiteColor">#fdfafa</color>
+    <color name="blackColor">#000000</color>
+    <color name="grayColor">#f9f4f4</color>
+    <color name="greenColor">#11c811</color>
+    <color name="redColor">#d76c5b</color>
+
 </resources>
