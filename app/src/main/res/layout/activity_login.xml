@@ -13,17 +13,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1.3"
-        app:autoFocusButtonColor="@android:color/white"
+        app:autoFocusButtonColor="@color/colorPrimary"
         app:autoFocusButtonVisible="true"
-        app:flashButtonColor="@android:color/white"
+        app:flashButtonColor="@color/colorPrimary"
         app:flashButtonVisible="true"
         app:frameAspectRatioHeight="1"
         app:frameAspectRatioWidth="1"
-        app:frameColor="@android:color/white"
+        app:frameColor="@color/colorPrimary"
         app:frameCornersSize="50dp"
         app:frameSize="0.75"
         app:frameThickness="2dp"
-        app:maskColor="#77000000" />
+        app:maskColor="@color/colorGray" />
 
 <TextView
     android:layout_width="match_parent"
@@ -47,6 +47,7 @@
             android:layout_weight=".1"></LinearLayout>
 
         <EditText
+            android:id="@+id/login_et_id"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_weight=".8"
@@ -71,7 +72,11 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight=".8" />
+            android:layout_weight=".8"
+            android:background="@color/colorPrimary"
+            android:text="Login"
+            android:textColor="@android:color/white"
+            />
     </LinearLayout>
 
 </LinearLayout>
