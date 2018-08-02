@@ -115,6 +115,12 @@ public class EmergencyFragment extends Fragment {
                 mCodeScanner.startPreview();
             }
         });
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO
+            }
+        });
 
         return view;
 

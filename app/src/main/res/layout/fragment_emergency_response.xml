@@ -1,0 +1,62 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.geeks.hackathon.EmergencyResponseFragment">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="horizontal"
+    android:weightSum="1"
+    >
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".25"
+        >
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_weight=".5"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/correct_symbol"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Emergency request has been sent successfully"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14dp"
+            android:textAlignment="center"
+            />
+        <RelativeLayout
+            android:layout_width="@dimen/hor_line"
+            android:layout_height="2dp"
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:layout_gravity="center"
+            ></RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Emergency team will arrive in about 3 minutes"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14dp"
+            android:textAlignment="center"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
+
+</FrameLayout>
