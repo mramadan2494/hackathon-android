@@ -1,9 +1,12 @@
 package com.geeks.hackathon;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -11,10 +14,16 @@ import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.budiyev.android.codescanner.ErrorCallback;
+import com.google.gson.JsonObject;
 import com.google.zxing.Result;
 
+import api.WebServiceApiAdapterBuilder;
+import api.response.CustomerLoginResponse;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     private CodeScanner mCodeScanner;
@@ -22,6 +31,11 @@ public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.login_et_id)
     EditText etID;
+
+    @BindView(R.id.login_btn_id)
+    Button btn;
+
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -38,7 +52,12 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         etID.setText(result.getText());
-                        Toast.makeText(activity, result.getText(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                        startActivity(intent);
+
+                        //TODO
+                       // login(result.getText());
+                       // Toast.makeText(activity, result.getText(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -61,6 +80,15 @@ public class LoginActivity extends AppCompatActivity {
                 mCodeScanner.startPreview();
             }
         });
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(intent);
+
+            }
+        });
     }
 
     @Override
@@ -73,5 +101,38 @@ public class LoginActivity extends AppCompatActivity {
     protected void onPause() {
         mCodeScanner.releaseResources();
         super.onPause();
+    }
+
+    private void login(String id) {
+        //ProgressbarDialog.getProgressDialog(this).show();
+        JsonObject customerLoginReq = new JsonObject();
+        customerLoginReq.addProperty("user_id", id);
+
+        Call<CustomerLoginResponse> loginCallBack = WebServiceApiAdapterBuilder.getInstance().login(customerLoginReq);
+        loginCallBackFunction(loginCallBack);
+
+    }
+
+    private void loginCallBackFunction(Call<CustomerLoginResponse> callback) {
+        callback.enqueue(new Callback<CustomerLoginResponse>() {
+            @Override
+            public void onResponse(Call<CustomerLoginResponse> call, Response<CustomerLoginResponse> response) {
+
+
+                if (response.isSuccessful()) {
+                    Log.v("Login", "response success :: " + response.code() + " ::  " + response.body().toString());
+                    CustomerLoginResponse customerLoginResponse = response.body();
+
+                    Log.v("Login", "response mapped to CustomerLoginReq :: " + customerLoginResponse.toString());
+
+                }
+                }
+
+            @Override
+            public void onFailure(Call<CustomerLoginResponse> call, Throwable t) {
+                Log.v("Login", "onFailure :: " + t.getMessage() + " ::  " + call.toString());
+            }
+
+        });
     }
 }
