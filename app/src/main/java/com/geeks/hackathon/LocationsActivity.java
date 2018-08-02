@@ -26,7 +26,7 @@ public class LocationsActivity extends AppCompatActivity {
     private static String TAG= "Locations";
 
     GroupFragment groupFragment;
-    GroupFragment groupFragment2;
+    PlacesFragment placesFragment;
 
     public static String INTENT_PUSH_NOTIFICATION = "intentPushNotification";
     @Override
@@ -82,14 +82,14 @@ public class LocationsActivity extends AppCompatActivity {
 
 
         groupFragment =new GroupFragment();
-        groupFragment2=new GroupFragment();
+        placesFragment=new PlacesFragment();
 
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         viewPagerAdapter.addFrag(groupFragment, "");
 
-        viewPagerAdapter.addFrag(groupFragment2, "");
+        viewPagerAdapter.addFrag(placesFragment, "");
 
         viewPager.setAdapter(viewPagerAdapter);
 

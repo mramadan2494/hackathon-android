@@ -1,7 +1,6 @@
 package com.geeks.hackathon;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,9 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,9 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import api.WebServiceApiAdapterBuilder;
-import api.response.CustomerLoginResponse;
 import api.response.User;
-import api.response.UsersResponse;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fastAdapterItems.LocationsAdapter;
@@ -37,20 +32,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class GroupFragment extends Fragment {
-
-    @BindView(R.id.group_recycler_view)
+public class PlacesFragment extends Fragment {
+    @BindView(R.id.places_recycler_view)
     RecyclerView recyclerView;
 
     Context context;
 
-    int screenType = 0;
-
     LocationsAdapter locationsAdapter;
-    public GroupFragment() {
+    public PlacesFragment() {
         // Required empty public constructor
     }
-
 
 
     @Override
@@ -72,6 +63,14 @@ public class GroupFragment extends Fragment {
         data.add(new User("Mohamed"));
         data.add(new User("Ramadan"));
         data.add(new User("Ali"));*/
+        ArrayList<User> data = new ArrayList<>();
+        data.add(new User("Bus"));
+        data.add(new User("Mina home"));
+        data.add(new User("Great Mosque of Mecca"));
+        data.add(new User("Mount Arafat"));
+
+        locationsAdapter = new LocationsAdapter( context ,data , 1);
+        recyclerView.setAdapter(locationsAdapter);
         setGroupUsers();
 
 
@@ -84,7 +83,7 @@ public class GroupFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_group, container, false);
+        View view = inflater.inflate(R.layout.fragment_places, container, false);
         initUI(view);
 
         return view;
@@ -106,7 +105,7 @@ public class GroupFragment extends Fragment {
     private void setGroupUsers() {
         //ProgressbarDialog.getProgressDialog(this).show();
         JsonObject customerLoginReq = new JsonObject();
-       
+
 
         Call<ResponseBody> usersCallBack = WebServiceApiAdapterBuilder.getInstance().getUsers();
         getUsersCallBackFunction(usersCallBack);
@@ -128,7 +127,7 @@ public class GroupFragment extends Fragment {
                     Log.v("GroupFragment", "onResponse response " + responseStr);
                     ArrayList<User> groupUsers=new ArrayList<>();
 
-                    JSONArray jsonarray = new JSONArray();
+                    JSONArray jsonarray = null;
                     try {
                         jsonarray = new JSONArray(responseStr);
                     } catch (JSONException e) {
@@ -138,7 +137,7 @@ public class GroupFragment extends Fragment {
                         JSONObject jsonobject = null;
                         try {
                             jsonobject = jsonarray.getJSONObject(i);
-                            String name = jsonobject.getString("userName");
+                            String name = jsonobject.getString("name");
                             String phone = jsonobject.getString("phone");
                             groupUsers.add(new User(name,phone));
                         } catch (JSONException e) {
@@ -150,8 +149,8 @@ public class GroupFragment extends Fragment {
 
 
                     Log.v("GroupFragment", "response mapped to CustomerLoginReq :: " + users.toString());
-                    locationsAdapter = new LocationsAdapter( context ,groupUsers , 0);
-                    recyclerView.setAdapter(locationsAdapter);
+
+
 
 
                 }

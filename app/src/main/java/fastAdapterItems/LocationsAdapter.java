@@ -1,6 +1,7 @@
 package fastAdapterItems;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -78,6 +79,18 @@ public class LocationsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     .into(((ItemViewHolder) holder).ivProductProfileImage);*/
             User user = data.get(position);
             itemViewHolder.ivFirst.setText(user.getUserName());
+
+            if(screenType == 0 ){
+
+                itemViewHolder.ivSecond.setText(user.getPhone());
+            }
+            else{
+              // itemViewHolder.ivSecond.setIm
+
+                Resources res = context.getResources(); /** from an Activity */
+                itemViewHolder.ivProductProfileImage.setImageDrawable(res.getDrawable(R.drawable.home));
+            }
+
 
 
 
