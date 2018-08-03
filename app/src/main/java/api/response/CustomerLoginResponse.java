@@ -8,10 +8,8 @@ package api.response;
 
 public class CustomerLoginResponse {
 
-    public static final String USERLOGIN_TOKEN="token";
-    public static final String USERLOGIN_LOGINFROM = "loginFrom";
 
-    private String token;
+    private String id;
 
 
 
@@ -20,14 +18,19 @@ public class CustomerLoginResponse {
 
     }
 
-    public String getToken() {
-        return token;
+
+    public String getId() {
+        return id;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setId(String id) {
+        this.id = id;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "CustomerLoginResponse{" +
+                "id='" + id + '\'' +
+                '}';
+    }
 }

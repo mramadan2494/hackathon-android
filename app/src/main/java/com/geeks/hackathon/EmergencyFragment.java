@@ -93,7 +93,8 @@ public class EmergencyFragment extends Fragment {
                     @Override
                     public void run() {
                         etID.setText(result.getText());
-                        Toast.makeText(activity, result.getText(), Toast.LENGTH_SHORT).show();
+                        ((MainActivity) getActivity()).navigate(new EmergencyResponseFragment());
+                        // Toast.makeText(activity, result.getText(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -118,7 +119,13 @@ public class EmergencyFragment extends Fragment {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO
+
+                if(etID.getText().length() == 0 ){
+                    Toast.makeText(activity, "Please scan the card or enter the code", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                ((MainActivity) getActivity()).navigate(new EmergencyResponseFragment());
             }
         });
 

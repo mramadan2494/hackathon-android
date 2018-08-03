@@ -1,6 +1,7 @@
 package com.geeks.hackathon;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 
@@ -20,6 +23,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import api.WebServiceApiAdapterBuilder;
 import api.response.User;
@@ -38,6 +42,9 @@ public class PlacesFragment extends Fragment {
 
     Context context;
 
+    @BindView(R.id.map_btn_places)
+    Button mapButton;
+
     LocationsAdapter locationsAdapter;
     public PlacesFragment() {
         // Required empty public constructor
@@ -54,6 +61,15 @@ public class PlacesFragment extends Fragment {
         context = getActivity();
         ButterKnife.bind(this, view);
 
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String uri = String.format(Locale.ENGLISH, "geo:%f,%f", 30.05611, 31.23944);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                context.startActivity(intent);
+            }
+        });
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -63,14 +79,15 @@ public class PlacesFragment extends Fragment {
         data.add(new User("Mohamed"));
         data.add(new User("Ramadan"));
         data.add(new User("Ali"));*/
-        ArrayList<User> data = new ArrayList<>();
+        /*ArrayList<User> data = new ArrayList<>();
         data.add(new User("Bus"));
         data.add(new User("Mina home"));
         data.add(new User("Great Mosque of Mecca"));
         data.add(new User("Mount Arafat"));
 
         locationsAdapter = new LocationsAdapter( context ,data , 1);
-        recyclerView.setAdapter(locationsAdapter);
+        recyclerView.setAdapter(locationsAdapter);*/
+
         setGroupUsers();
 
 
@@ -107,7 +124,7 @@ public class PlacesFragment extends Fragment {
         JsonObject customerLoginReq = new JsonObject();
 
 
-        Call<ResponseBody> usersCallBack = WebServiceApiAdapterBuilder.getInstance().getUsers();
+        Call<ResponseBody> usersCallBack = WebServiceApiAdapterBuilder.getInstance().getLocations();
         getUsersCallBackFunction(usersCallBack);
 
     }
@@ -133,13 +150,16 @@ public class PlacesFragment extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
+                    if (jsonarray == null)
+                        return;
                     for (int i = 0; i < jsonarray.length(); i++) {
                         JSONObject jsonobject = null;
                         try {
                             jsonobject = jsonarray.getJSONObject(i);
                             String name = jsonobject.getString("name");
-                            String phone = jsonobject.getString("phone");
-                            groupUsers.add(new User(name,phone));
+                            //String phone = jsonobject.getString("phone");
+                            groupUsers.add(new User(name));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -150,8 +170,8 @@ public class PlacesFragment extends Fragment {
 
                     Log.v("GroupFragment", "response mapped to CustomerLoginReq :: " + users.toString());
 
-
-
+                    locationsAdapter = new LocationsAdapter( context ,groupUsers , 1);
+                    recyclerView.setAdapter(locationsAdapter);
 
                 }
             }
@@ -159,6 +179,7 @@ public class PlacesFragment extends Fragment {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.v("GroupFragment", "onFailure :: " + t.getMessage() + " ::  " + call.toString());
+                Toast.makeText(getActivity(), "Internet Connection Failed ", Toast.LENGTH_SHORT).show();
             }
 
         });

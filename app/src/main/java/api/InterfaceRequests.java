@@ -11,17 +11,21 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by Mohamed Ramadan on 3/6/2017.
  */
 public interface InterfaceRequests {
 
-    @POST("/api/user/login")
-    Call<CustomerLoginResponse> login(@Body JsonObject customerLoginReq);
+    @GET("/users/{id}")
+    Call<CustomerLoginResponse> login(@Path("id") String id);
     @GET("/users")
     Call<ResponseBody> getUsers();
+    @GET("/locations")
+    Call<ResponseBody> getLocations();
 
-    ;
+
 
 }

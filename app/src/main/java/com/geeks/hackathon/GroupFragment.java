@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -23,6 +25,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import api.WebServiceApiAdapterBuilder;
 import api.response.CustomerLoginResponse;
@@ -41,6 +44,9 @@ public class GroupFragment extends Fragment {
 
     @BindView(R.id.group_recycler_view)
     RecyclerView recyclerView;
+
+    @BindView(R.id.map_btn)
+    Button mapButton;
 
     Context context;
 
@@ -62,6 +68,15 @@ public class GroupFragment extends Fragment {
     public void initUI(View view){
         context = getActivity();
         ButterKnife.bind(this, view);
+
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String uri = String.format(Locale.ENGLISH, "geo:%f,%f", 30.05611, 31.23944);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                context.startActivity(intent);
+            }
+        });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.VERTICAL, false);
@@ -129,11 +144,14 @@ public class GroupFragment extends Fragment {
                     ArrayList<User> groupUsers=new ArrayList<>();
 
                     JSONArray jsonarray = new JSONArray();
+
                     try {
                         jsonarray = new JSONArray(responseStr);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    if (jsonarray == null)
+                        return;
                     for (int i = 0; i < jsonarray.length(); i++) {
                         JSONObject jsonobject = null;
                         try {
@@ -160,6 +178,7 @@ public class GroupFragment extends Fragment {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.v("GroupFragment", "onFailure :: " + t.getMessage() + " ::  " + call.toString());
+                Toast.makeText(getActivity(), "Internet Connection Failed ", Toast.LENGTH_SHORT).show();
             }
 
         });

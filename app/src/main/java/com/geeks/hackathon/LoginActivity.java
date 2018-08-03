@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
 
                         //TODO
-                       // login(result.getText());
+                        //login(result.getText());
                        // Toast.makeText(activity, result.getText(), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -84,11 +84,11 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                login(etID.getText().toString());
+                /*Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                finish();
+                finish();*/
 
             }
         });
@@ -109,10 +109,12 @@ public class LoginActivity extends AppCompatActivity {
     private void login(String id) {
         //ProgressbarDialog.getProgressDialog(this).show();
         JsonObject customerLoginReq = new JsonObject();
-        customerLoginReq.addProperty("user_id", id);
+        customerLoginReq.addProperty("id", id);
 
-        Call<CustomerLoginResponse> loginCallBack = WebServiceApiAdapterBuilder.getInstance().login(customerLoginReq);
+        Call<CustomerLoginResponse> loginCallBack = WebServiceApiAdapterBuilder.getInstance().login(id);
         loginCallBackFunction(loginCallBack);
+
+        Log.v("Login", "called :: " );
 
     }
 
@@ -125,15 +127,23 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Log.v("Login", "response success :: " + response.code() + " ::  " + response.body().toString());
                     CustomerLoginResponse customerLoginResponse = response.body();
+                    if(customerLoginResponse == null || customerLoginResponse.getId() == null){
+                        Toast.makeText(activity, "Invalid User", Toast.LENGTH_SHORT).show();
+                        return;
 
+                    }
                     Log.v("Login", "response mapped to CustomerLoginReq :: " + customerLoginResponse.toString());
 
+                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                    startActivity(intent);
                 }
                 }
 
             @Override
             public void onFailure(Call<CustomerLoginResponse> call, Throwable t) {
                 Log.v("Login", "onFailure :: " + t.getMessage() + " ::  " + call.toString());
+
+                Toast.makeText(activity, "Internet Connection Failed ", Toast.LENGTH_SHORT).show();
             }
 
         });

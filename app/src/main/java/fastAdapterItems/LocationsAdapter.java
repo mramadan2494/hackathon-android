@@ -1,13 +1,16 @@
 package fastAdapterItems;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -33,7 +36,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private int screenType = 0;
 
-   Context  context;
+    public Context  context;
     ArrayList<User> data;
     public LocationsAdapter(Context context , ArrayList<User> data , int screenType) {
         this.context = context;
@@ -59,7 +62,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         View v;
 
             v = LayoutInflater.from(parent.getContext()).inflate(R.layout.location_item, parent, false);
-            return new ItemViewHolder(v);
+            return new ItemViewHolder(v,context);
 
 
 
@@ -117,10 +120,26 @@ public class LocationsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         @BindView(R.id.item_second)
         TextView ivSecond;
 
+        @BindView(R.id.item_parent)
+        LinearLayout parentLayout;
 
-        public ItemViewHolder(View itemView) {
+
+
+        public ItemViewHolder(View itemView ,final Context mcontext) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+
+
+           parentLayout.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   String uri = String.format(Locale.ENGLISH, "geo:%f,%f", 21.4229, 39.8257);
+                   Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                   mcontext.startActivity(intent);
+               }
+           });
+
         }
     }
 

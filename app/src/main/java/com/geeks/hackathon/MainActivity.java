@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigate(new GroupFragment());
     }
 
     @Override
@@ -70,17 +71,24 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Fragment fragment = null;
-        if (id == R.id.menu_item_traffic) {
-
+        if (id == R.id.menu_item_group) {
+            fragment =  new GroupFragment();
         } else if (id == R.id.menu_item_help_me) {
             fragment = new EmergencyResponseFragment();
         } else if (id == R.id.menu_item_help) {
             fragment = new EmergencyFragment();
         } else if (id == R.id.menu_item_location) {
-            Intent intent = new Intent(MainActivity.this, LocationsActivity.class);
+            /*Intent intent = new Intent(MainActivity.this, LocationsActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);*/
+            fragment =  new PlacesFragment();
+
+        }
+
+        else if (id == R.id.menu_item_logout) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-
         }
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -91,6 +99,16 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void navigate( Fragment fragment){
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.container, fragment);
+        ft.commit();
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+
     }
 
 }
