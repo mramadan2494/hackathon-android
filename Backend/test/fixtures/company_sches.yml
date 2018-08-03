@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  schID: 
+  companyNo: 
+  sdate: 2018-08-02
+  stime: 2018-08-02 21:36:55
+  status: MyString
+
+two:
+  schID: 
+  companyNo: 
+  sdate: 2018-08-02
+  stime: 2018-08-02 21:36:55
+  status: MyString

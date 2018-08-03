@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  hajjId: 
+  groupNo: 
+  companyNo: 
+
+two:
+  hajjId: 
+  groupNo: 
+  companyNo: 

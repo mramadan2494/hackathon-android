@@ -1,0 +1,2 @@
+class Haj < ApplicationRecord
+end

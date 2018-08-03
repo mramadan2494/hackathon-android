@@ -1,0 +1,2 @@
+class Schmain < ApplicationRecord
+end
