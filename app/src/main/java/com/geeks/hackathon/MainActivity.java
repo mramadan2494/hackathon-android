@@ -1,5 +1,6 @@
 package com.geeks.hackathon;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -75,7 +76,10 @@ public class MainActivity extends AppCompatActivity
             fragment = new EmergencyResponseFragment();
         } else if (id == R.id.menu_item_help) {
             fragment = new EmergencyFragment();
-        } else if (id == R.id.menu_item_logout) {
+        } else if (id == R.id.menu_item_location) {
+            Intent intent = new Intent(MainActivity.this, LocationsActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
 
         }
         if (fragment != null) {
